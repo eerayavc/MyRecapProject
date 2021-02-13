@@ -1,4 +1,5 @@
 ﻿using Business.Concrete;
+using DataAccess.Abstract;
 using DataAccess.Concrete.EntityFramework;
 using DataAccess.Concrete.InMemory;
 using System;
@@ -9,6 +10,13 @@ namespace ConsoleUI
     {
         static void Main(string[] args)
         {
+            //CarTest();
+            //LİST();
+
+        }
+
+        private static void LİST()
+        {
             CarManager carManager = new CarManager(new EfCarDal());
             BrandManager brandManager = new BrandManager(new EfBrandDal());
             //ColorManager colorManager = new ColorManager(new EfColorDal());
@@ -18,7 +26,7 @@ namespace ConsoleUI
             Console.WriteLine("--------     -------      ----------       --------        ------------");
             foreach (var car in carManager.GetAll())
             {
-                Console.WriteLine( car.BrandId + "      -      " + car.ColorId + "     -       " + car.ModelYear + "      -     " + car.Description + "     ---> " + car.DailyPrice + " TL");
+                Console.WriteLine(car.BrandId + "      -      " + car.ColorId + "     -       " + car.ModelYear + "      -     " + car.Description + "     ---> " + car.DailyPrice + " TL");
             }
 
             Console.WriteLine("------ARAÇ MARKA ID VE MARKA ADI BİLGİSİ------");
@@ -39,11 +47,19 @@ namespace ConsoleUI
             {
                 Console.WriteLine(color.ColorId + "       --->  " + color.ColorName);
             }
-            Console.WriteLine("AHMET AKSOY'A HAYIRLI OLSUN");
+
             Console.ReadKey();
-
         }
+        //*******************************************************************************
+        private static void CarTest()
+        {
+            CarManager carManager = new CarManager(new EfCarDal());
 
+            foreach (var car in carManager.GetCarDetails())
+            {
+                Console.WriteLine(car.CarId + "/" + car.BrandName);
+            }
+        }
 
     }
 }
