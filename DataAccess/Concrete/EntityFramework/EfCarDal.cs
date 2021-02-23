@@ -11,9 +11,9 @@ using System.Text;
 
 namespace DataAccess.Concrete.EntityFramework
 {
-    public class EfCarDal : EfEntitiyRepositoryBase<Car, CarProjectContext>, ICarDal
+    public class EfCarDal : EfEntityRepositoryBase<Car, CarProjectContext>, ICarDal
     {
-        public List<CarDetailDto> GetCarDetails()
+        public List<CarDetailDto> GetCarDetails(Expression<Func<Car, bool>> filter = null)
         {
             using (CarProjectContext context = new CarProjectContext())
             {
@@ -22,9 +22,11 @@ namespace DataAccess.Concrete.EntityFramework
                              on c.BrandId equals b.BrandId
                              join a in context.Colors
                              on c.ColorId equals a.ColorId
-                             select new CarDetailDto { CarId = c.CarId, BrandName = b.BrandName, ColorName = a.ColorName,DailyPrice=c.DailyPrice };
+                             select new CarDetailDto { CarName = c.CarName, BrandName = b.BrandName, ColorName = a.ColorName,DailyPrice=c.DailyPrice };
                 return result.ToList();
             }
         }
+
+       
     }
 }
